@@ -1,2 +1,2 @@
-# -aws-addr-autocomplete-demo
+# aws-addr-autocomplete-demo
 Address autocomplete poc
