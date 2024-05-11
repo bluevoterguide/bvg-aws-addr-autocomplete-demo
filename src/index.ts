@@ -63,7 +63,15 @@ autocomplete<AddrSuggestion>({
   debounceWaitMs: 300,
   className: "autocomplete-suggestions",
   fetch: (text: string, update: (suggestions: AddrSuggestion[]|false) => void) => {
-    getAddressAutocompleteSuggestions(text, []).then((result) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const biasLat = urlParams.get('lat');
+    const biasLng = urlParams.get('lng');
+    let bias: number[] = [];
+    if (biasLat && biasLng) {
+      bias = [parseFloat(biasLng), parseFloat(biasLat)];
+    }
+
+    getAddressAutocompleteSuggestions(text, bias).then((result) => {
       if (result.error) {
         console.error(`Error fetching address autocomplete suggestions: ${result.error}`)
         update(false);
