@@ -1,4 +1,4 @@
-fetch('/path/to/your/php/script.php')
+fetch('/path/to/your/php/gen-temp-creds.php')
   .then(response => response.json())
   .then(data => {
     AWS.config.update({
