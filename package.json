@@ -5,7 +5,7 @@
   "author": "Wes Morgan <git@wesmorgan.me>",
   "license": "MIT",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack && ./copy.sh",
     "watch": "webpack --watch --progress",
     "start": "webpack serve"
   },

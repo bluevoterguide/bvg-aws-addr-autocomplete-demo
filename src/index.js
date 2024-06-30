@@ -1,21 +1,27 @@
 
 import { LocationClient, SearchPlaceIndexForSuggestionsCommand } from "@aws-sdk/client-location";
-import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
+import { CognitoIdentityClient, GetCredentialsForIdentityCommand } from "@aws-sdk/client-cognito-identity";
 import autocompleter from "autocompleter";
-
 
 const getClient = async () => {
   
-  const cognitoClient = new CognitoIdentityClient();
+  const cognitoClient = new CognitoIdentityClient({ region: 'us-east-1' });
 
-  const creds = await fetch('/api/cognito-credentials.php');
+  const res = await fetch('/api/cognito-credentials.php');
 
-    
+  console.log("debug res", res);
+
+  const creds = await res.text();
+
+  console.log("debug creds", creds);
+
   const params = {
     IdentityId: creds,
   };
 
   const response = await cognitoClient.send(new GetCredentialsForIdentityCommand(params));
+
+  console.log("debug response", response);
 
   const locationClient = new LocationClient({
     region: 'us-east-1',
@@ -26,6 +32,7 @@ const getClient = async () => {
     }
   });
 
+  console.log("debug have client");
   
   return locationClient;
     
@@ -63,7 +70,7 @@ const getAddressAutocompleteSuggestions = async ({ locationClient, text, bias })
   return result;
 };
 
-export const AutoComplete = async () => {
+export const init = async () => {
 
   const locationClient = await getClient();
 
@@ -97,8 +104,6 @@ export const AutoComplete = async () => {
     },
   });
 }
-
-export default AutoComplete;
 
 
 

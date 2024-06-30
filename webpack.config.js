@@ -21,8 +21,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "build"),
-    publicPath: "", // same dir as HTML page
     filename: "main.js",
-    library: "AutoComplete",
+    library: {
+      name: "Autocomplete",
+      type: "umd",
+    }
   },
 };
