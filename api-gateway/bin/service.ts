@@ -7,15 +7,17 @@ import { BVGProps } from '../lib/patterns';
 const app = new cdk.App();
 
 const env = app.node.tryGetContext('env');
+const team = app.node.tryGetContext('team');
 const appName = app.node.tryGetContext('appName');
 
-new MainStack(app, `${env}-${appName}-stack`, {
+new MainStack(app, `${env}-${team}-${appName}-stack`, {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
   bvgEnvironment: {
     env,
+    team,
     appName,
   }
 } as BVGProps);

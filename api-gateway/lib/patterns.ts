@@ -29,8 +29,8 @@ export class BVGStack extends Stack implements BVGStackAssetName {
     }
 
     getName(name: string) {
-        const { env, appName } = this.bvgEnvironment;
-        return `${env}-${appName}-${name}`;
+        const { env, team, appName } = this.bvgEnvironment;
+        return `${env}-${team}-${appName}-${name}`;
       }
 }
 
@@ -46,12 +46,12 @@ export class BVGFunction extends Construct implements BVGStackAssetName {
   }
 
   getName(name: string) {
-    const { env, appName } = this.bvgEnvironment;
-    return `${env}-${appName}-${name}`;
+    const { env, team, appName } = this.bvgEnvironment;
+    return `${env}-${team}-${appName}-${name}`;
   }
 
   createLambda() {
-    const { env, appName, name, options = {} } = this.bvgEnvironment;
+    const { env, team, appName, name, options = {} } = this.bvgEnvironment;
 
     const { policies = [], timeout = 30, memory = 128 } = options;
 
@@ -59,6 +59,7 @@ export class BVGFunction extends Construct implements BVGStackAssetName {
 
     const environment = {
       env,
+      team,
       appName,
     };
 
