@@ -1,32 +1,30 @@
 const path = require("path");
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: './src/index.js',
+  mode: 'development',
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.(?:js)$/,
         exclude: /node_modules/,
-      },
-    ],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', { targets: "defaults" }]
+            ]
+          }
+        }
+      }
+    ]
   },
   output: {
-    path: path.resolve(__dirname, "public"),
-    publicPath: "", // same dir as HTML page
-    filename: "main.js"
+    path: path.resolve(__dirname, "build"),
+    filename: "main.js",
+    library: {
+      name: "Autocomplete",
+      type: "umd",
+    }
   },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-    fallback: { path: require.resolve("path-browserify") },
-  },
-  devServer: {
-    port: 8000,
-    static: {
-      directory: path.join(__dirname, "public"),
-    },
-    client: {
-      overlay: false,
-    },
-  }
 };
